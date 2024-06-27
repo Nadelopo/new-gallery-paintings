@@ -1,6 +1,80 @@
+@use "breakpoints.sass"
+
 *,
 *::before,
 *::after 
   box-sizing: border-box
   margin: 0
   font-weight: normal
+
+:root
+  --primary-white: #FFFFFF
+  --primary-black: #121212
+  --primary-gray-light: #DEDEDE
+  --primary-gray-dark: #575757
+  --secondary-white: #FCFCFC
+  --secondary-black: #1A1818
+  --secondary-gray: #9C9C9C
+  --accent-red: #9B4B4B
+  --accent-gold: #AB8956
+  --border: var(--primary-gray-light)
+  --bg-element: var(--primary-white)
+  //--------------------------
+  --primary: var(--primary-white)
+  --primary-reverse: var(--primary-black)
+  --primary-gray: var(--primary-gray-light)
+  --primary-gray-reverse: var(--primary-gray-dark)
+  --secondary: var(--secondary-white)
+  --accent: var(--accent-red)
+  //-------------------------- 
+  --text-primary: #121212
+  --text-primary-gray: #575757
+
+
+html[data-theme='dark']
+  --primary: var(--primary-black)
+  --primary-reverse: var(--primary-white)
+  --primary-gray: var(--primary-gray-dark)
+  --primary-gray-reverse: var(--primary-gray-light)
+  --secondary: var(--secondary-black)
+  --accent: var(--accent-gold)
+  --border: var(--secondary-black)
+  --bg-element: var(--secondary-black)
+  //-------------------------- 
+  --text-primary: #FFFFFF
+  --text-primary-gray: #DEDEDE
+
+body
+  background: var(--primary)
+  height: 200vh
+
+body::-webkit-scrollbar
+  width: 10px
+
+body::-webkit-scrollbar-track
+  background-color: var(--background-el)
+  border-radius: 0 0 8px 0
+
+body::-webkit-scrollbar-thumb
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
+  background: #7B7B7B
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12)
+  border-radius: 10px
+  transform: matrix(1, 0, 0, -1, 0, 0)
+
+button
+  cursor: pointer
+
+.container
+  margin-right: auto
+  margin-left: auto
+  width: 100%
+  max-width: 1240px
+
+@media (width < breakpoints.$md)
+  .container
+    max-width: 728px
+
+@media (width < breakpoints.$sm)
+  .container
+    max-width: 280px
