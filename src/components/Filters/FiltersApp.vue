@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // prettier-ignore
 import {
-  computed, onMounted, onUnmounted, ref,
+  computed, onMounted, ref,
 } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
@@ -70,13 +70,7 @@ const clear = () => {
   setQueryParams();
 };
 
-const onEnter = (e: KeyboardEvent) => {
-  if (e.key === 'Enter') {
-    setQueryParams();
-  }
-};
 onMounted(async () => {
-  window.addEventListener('keydown', onEnter);
   await router.isReady();
   const { query } = router.currentRoute.value;
   search.value = (query.search as string) ?? '';
@@ -85,10 +79,6 @@ onMounted(async () => {
   createdFrom.value = query.from ? Number(query.from) : null;
   createdTo.value = query.to ? Number(query.to) : null;
   page.value = query.page ? Number(query.page) : 1;
-});
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', onEnter);
 });
 
 const isFiltersOpen = ref(false);
@@ -107,6 +97,8 @@ onClickOutside(filtersRef, () => {
       class="test"
       placeholder="Painting title"
       @clear="setQueryParams"
+      @keyup.enter="setQueryParams"
+      @search="setQueryParams"
     />
     <v-filter-button @click="isFiltersOpen = true" />
     <Teleport to="body">
@@ -124,7 +116,10 @@ onClickOutside(filtersRef, () => {
               <v-icon icon="close_big" />
             </button>
           </div>
-          <div class="filters__container">
+          <form
+            class="filters__container"
+            @submit.prevent="setQueryParams"
+          >
             <div class="filters">
               <filter-block title="artist">
                 <v-select
@@ -159,7 +154,7 @@ onClickOutside(filtersRef, () => {
             <div class="actions">
               <v-button
                 label="show the results"
-                @click="setQueryParams"
+                type="submit"
               />
               <v-button
                 label="clear"
@@ -167,7 +162,7 @@ onClickOutside(filtersRef, () => {
                 @click="clear"
               />
             </div>
-          </div>
+          </form>
         </div>
       </Transition>
     </Teleport>

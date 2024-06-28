@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { ContentLoader } from 'vue-content-loader';
 import { getData } from '@/api/getData';
+import { useTheme } from '@/composables/useTheme';
 import { useDataStore, type Author, type Location } from '@/stores/useDataStore';
 import { VCard } from './ui';
 
@@ -20,9 +22,16 @@ type VisiblePainting = Omit<Painting, 'authorId' | 'locationId'> & {
   location: string;
 };
 
-// prettier-ignore
 const {
-  authors, locations, totalPages, page, search, authorId, locationId, createdFrom, createdTo,
+  authors,
+  locations,
+  totalPages,
+  page,
+  search,
+  authorId,
+  locationId,
+  createdFrom,
+  createdTo,
 } = storeToRefs(useDataStore());
 
 const setAdditionalData = async () => {
@@ -38,10 +47,9 @@ const setAdditionalData = async () => {
 const paintings = ref<VisiblePainting[]>([]);
 const desiredValue = ref('');
 const loading = ref<'loading' | 'success' | 'empty'>('loading');
-const getPaintings = async () => {
-  loading.value = 'loading';
-  // console.log(authorId.value, locationId.value);
 
+const setPaintings = async () => {
+  loading.value = 'loading';
   const { data, error, count } = await getData<Painting[]>('paintings', {
     _limit: 6,
     _page: page.value,
@@ -72,25 +80,24 @@ const getPaintings = async () => {
   });
   loading.value = data.length ? 'success' : 'empty';
 };
-// onBeforeMount(async () => {
-//   await setAdditionalData();
-//   getPaintings();
-// });
+
+let isWatcherReady = false;
+onBeforeMount(async () => {
+  await setAdditionalData();
+  await setPaintings();
+  isWatcherReady = true;
+});
 
 const route = useRoute();
-const isRouterReady = ref(false);
-const router = useRouter();
-router.isReady().then(() => {
-  isRouterReady.value = true;
-});
+watch(
+  () => route.query,
+  () => {
+    if (!isWatcherReady) return;
+    setPaintings();
+  },
+);
 
-watch([() => route.query, isRouterReady], async () => {
-  if (!isRouterReady.value) return;
-  if (locations.value.length === 0 || authors.value.length === 0) {
-    await setAdditionalData();
-  }
-  getPaintings();
-});
+const { isDark } = useTheme();
 </script>
 
 <template>

@@ -44,10 +44,10 @@ const icon = computed(() => {
   justify-content: space-between
   margin-bottom: 24px
   cursor: pointer
+  user-select: none
   svg
     fill: var(--primary-gray-reverse)
     cursor: pointer
-    user-select: none
   h2
     font-family: Cormorant SC
     font-size: 16px

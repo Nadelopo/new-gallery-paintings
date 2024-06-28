@@ -60,7 +60,6 @@ const imageUrl = import.meta.env.VITE_API + props.url;
       transform: translateY(60px)
   img
     position: absolute
-    // top: -80px
     transition: .4s
     width: 100%
   @media (width < $md)
