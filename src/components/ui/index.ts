@@ -6,3 +6,4 @@ export { default as VInput } from './VInput.vue';
 export { default as VPagination } from './VPagination.vue';
 export { default as VCard } from './VCard.vue';
 export { default as VFilterButton } from './VFilterButton.vue';
+export { default as VAccordion } from './VAccordion.vue';

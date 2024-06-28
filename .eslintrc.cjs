@@ -21,6 +21,8 @@ module.exports = {
     'import/extensions': 'off',
     'import/prefer-default-export': 'off',
     'implicit-arrow-linebreak': 'off',
+    'function-paren-newline': 'off',
+    'linebreak-style': 'off',
   },
   settings: {
     ...createAliasSetting({
