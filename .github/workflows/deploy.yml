@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  VITE_API: https://test-front.framework.team/
+  VITE_API: ${{ vars.VITE_API }}
 
 jobs:
   # Single deploy job since we're just deploying
