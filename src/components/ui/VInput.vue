@@ -1,15 +1,28 @@
 <script setup lang="ts">
 import type { InputHTMLAttributes } from 'vue';
 
-const model = defineModel<string>({ required: true });
-
 interface Props extends /* @vue-ignore */ InputHTMLAttributes {}
 defineProps<Props>();
+
+const model = defineModel<number | null | string>({ required: true });
+
+const onInput = () => {
+  if (model.value === '' || model.value === 0) {
+    model.value = null;
+  }
+};
 </script>
 
 <template>
   <!-- eslint-disable-next-line -->
-  <input type="text" v-model="model" class="v__input" :class="{ filled: model }" />
+  <input
+    v-model="model"
+    type="number"
+    class="v__input"
+    :class="{ filled: model }"
+    min="0"
+    @input="onInput"
+  />
 </template>
 
 <style scoped lang="sass">
@@ -22,6 +35,9 @@ defineProps<Props>();
   color: var(--secondary-gray)
   outline: none
   background: var(--bg-element)
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button
+    -webkit-appearance: none
   &.filled
     color: var(--text-primary-gray)
   &:focus-visible

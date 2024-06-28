@@ -14,7 +14,10 @@ const imageUrl = import.meta.env.VITE_API + props.url;
 
 <template>
   <div class="v__card">
-    <img :src="imageUrl" alt="" />
+    <img
+      :src="imageUrl"
+      alt=""
+    />
     <div class="info">
       <div class="v__wrapper">
         <div class="artist__info">
@@ -27,7 +30,10 @@ const imageUrl = import.meta.env.VITE_API + props.url;
         </div>
       </div>
       <button type="button">
-        <v-icon icon="vector" fill="#fff" />
+        <v-icon
+          icon="vector"
+          fill="#fff"
+        />
       </button>
     </div>
   </div>
@@ -103,17 +109,20 @@ const imageUrl = import.meta.env.VITE_API + props.url;
     width: 236px
     padding: 8px 0 8px 12px
   h1
-    font-family: 'Cormorant SC', serif
+    font-family: Cormorant SC
     color: var(--text-primary)
     font-size: 16px
     font-weight: 500
     text-transform: uppercase
     margin-bottom: 8px
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
     @media (width< $sm)
       font-size: 12px
       margin-bottom: 4px
   .caption
-    font-family: "Inter", sans-serif
+    font-family: Inter
     font-weight: 700
     font-size: 12px
     text-transform: uppercase
