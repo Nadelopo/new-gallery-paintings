@@ -84,7 +84,6 @@ const label = computed(() => {
       <v-icon
         icon="expand"
         class="expand"
-        :style="`transform: rotate(${isActive ? 180 : 0}deg)`"
       />
     </button>
     <Transition name="v">
@@ -148,9 +147,11 @@ const label = computed(() => {
   .expand
     transition: transform 0.2s ease
     fill: var(--secondary-gray)
-  &:has(.active)
+  &:has(.head.active)
     background: var(--bg-element)
     border-radius: 4px 4px 0px 0px
+    .expand
+      transform: rotate(180deg)
 
 .head
   width: 100%
