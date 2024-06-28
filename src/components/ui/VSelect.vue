@@ -2,7 +2,6 @@
 // prettier-ignore
 import {
   ref, onUnmounted, watch, nextTick,
-  computed,
 } from 'vue';
 import { onClickOutsideClose } from '@/composables/onClickOutsideClose';
 import { VIcon } from '.';
@@ -12,12 +11,11 @@ type Option = {
   value: T;
 };
 
-const props = defineProps<{
+defineProps<{
   options: Option[];
-  label?: string;
 }>();
 
-const model = defineModel<T | null>({ required: true });
+const model = defineModel<T>({ required: true });
 
 const headRef = ref<HTMLButtonElement>();
 const isActive = onClickOutsideClose(headRef);
@@ -48,14 +46,8 @@ watch(isActive, async () => {
   if (isActive.value) {
     window.addEventListener('keydown', stopScrollDocument);
     await nextTick();
-    const foundValueIndex = props.options.findIndex((o) => o.value === model.value);
-    if (foundValueIndex === -1) {
-      const firshElement = listRef.value?.firstElementChild as HTMLButtonElement | null;
-      firshElement?.focus();
-    } else {
-      const children = listRef.value?.children as HTMLButtonElement[] | undefined;
-      children?.[foundValueIndex].focus();
-    }
+    const firshElement = listRef.value?.firstElementChild as HTMLButtonElement | null;
+    firshElement?.focus();
   } else {
     window.removeEventListener('keydown', stopScrollDocument);
   }
@@ -63,11 +55,6 @@ watch(isActive, async () => {
 
 onUnmounted(() => {
   window.removeEventListener('keydown', stopScrollDocument);
-});
-
-const label = computed(() => {
-  const option = props.options.find((o) => o.value === model.value);
-  return option?.title || (props.label ?? 'Select the value');
 });
 </script>
 
@@ -80,27 +67,12 @@ const label = computed(() => {
       type="button"
       @click="isActive = !isActive"
     >
-      <span> {{ label }}</span>
-      <v-icon
-        icon="expand"
-        class="expand"
-      />
+      <span> {{ model || 'Select the location' }}</span>
+      <v-icon icon="expand" class="expand" />
     </button>
     <Transition name="v">
       <template v-if="isActive">
-        <div
-          v-if="options.length"
-          ref="listRef"
-          class="list"
-        >
-          <button
-            class="option"
-            :class="{ active: model === null }"
-            type="button"
-            @click="model = null"
-          >
-            all
-          </button>
+        <div v-if="options.length" ref="listRef" class="list">
           <button
             v-for="(option, i) in options"
             :key="i"
@@ -113,19 +85,13 @@ const label = computed(() => {
             {{ option.title }}
           </button>
         </div>
-        <div
-          v-else
-          class="list empty"
-        >
-          There are no matching results for your query.
-        </div>
+        <div v-else class="list empty">There are no matching results for your query.</div>
       </template>
     </Transition>
   </div>
 </template>
 
 <style scoped lang="sass">
-@use '@/assets/breakpoints' as *
 .v-enter-active,
 .v-leave-active
   transition: 0.2s ease
@@ -137,21 +103,16 @@ const label = computed(() => {
 
 .v__wrapper
   position: relative
-  width: 320px
+  width: 340px
   font-family: "Inter", sans-serif
   font-weight: 300
   font-size: 14px
-  @media (width < $sm)
-    font-size: 12px
-    width: 240px
+  overflow: hidden
   .expand
     transition: transform 0.2s ease
     fill: var(--secondary-gray)
-  &:has(.active)
-    background: var(--bg-element)
-    border-radius: 4px 4px 0px 0px
-    .expand
-      transform: rotate(180deg)
+  &:has(.active) .expand
+    transform: rotate(180deg)
 
 .head
   width: 100%
@@ -162,34 +123,25 @@ const label = computed(() => {
   background: var(--bg-element)
   color: var(--secondary-gray)
   position: relative
+  z-index: 2
   font-size: 14px
   outline: none
   display: flex
   justify-content: space-between
-  font-family: inherit
-  @media (width < $sm)
-    height: 33px
   &:focus-visible, &.active
     border: 1px solid var(--primary-gray-reverse)
   &.filled
     color: var(--text-primary-gray)
-  span
-    overflow: hidden
-    text-overflow: ellipsis
-    white-space: nowrap
 
 .list
   background: var(--bg-element)
   width: 100%
-  position: absolute
-  top: 36px
-  padding-top: 12px
+  transform: translateY(-4px)
+  padding-top: 14px
   border-radius: 0 0 4px 4px
+  overflow: hidden
   max-height: 220px
   overflow-y: auto
-  z-index: 10
-  @media (width < $sm)
-    top: 33px
   &::-webkit-scrollbar
     width: 12px
     background: transparent
@@ -209,7 +161,6 @@ const label = computed(() => {
     padding: 8px 16px
     display: block
     outline: none
-    font-family: inherit
     &:hover, &:focus-visible, &:focus
       background: #1212120D
   &.empty

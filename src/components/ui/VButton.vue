@@ -9,12 +9,7 @@ defineProps<Props>();
 </script>
 
 <template>
-  <button
-    type="button"
-    class="v__button"
-  >
-    {{ label }}
-  </button>
+  <button type="button" class="v__button">{{ label }}</button>
 </template>
 
 <style scoped lang="sass">
@@ -25,12 +20,11 @@ defineProps<Props>();
   border-bottom: 1px solid var(--primary-gray-reverse)
   color: var(--primary-gray-reverse)
   padding: 0
-  font-size: 12px
+  font-size: 15px
   font-weight: 700
   font-family: Inter
   line-height: 15px
   outline: none
-  text-transform: uppercase
   &:focus-visible, &:active, &:hover
     color: var(--primary-reverse)
     border-bottom: 1px solid var(--primary-reverse)

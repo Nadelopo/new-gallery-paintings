@@ -64,25 +64,11 @@ const setPage = (page: number) => {
 </script>
 
 <template>
-  <div
-    v-if="itemCount !== 0"
-    class="v__pagination"
-  >
-    <button
-      type="button"
-      :disabled="currentPage === 1"
-      class="prev"
-      @click="setPrev"
-    >
-      <v-icon
-        icon="arrow"
-        transform="rotate(180)"
-      />
+  <div v-if="itemCount !== 0" class="v__pagination">
+    <button type="button" :disabled="currentPage === 1" class="prev" @click="setPrev">
+      <v-icon icon="arrow" transform="rotate(180)" />
     </button>
-    <template
-      v-for="(value, i) in items"
-      :key="i"
-    >
+    <template v-for="(value, i) in items" :key="i">
       <button
         v-if="value > 0"
         type="button"
@@ -92,20 +78,10 @@ const setPage = (page: number) => {
         {{ value }}
       </button>
       <template v-else>
-        <button
-          class="page-switch"
-          type="button"
-        >
-          ...
-        </button>
+        <button class="page-switch" type="button">...</button>
       </template>
     </template>
-    <button
-      type="button"
-      :disabled="currentPage === pageCount"
-      class="next"
-      @click="setNext"
-    >
+    <button type="button" :disabled="currentPage === pageCount" class="next" @click="setNext">
       <v-icon icon="arrow" />
     </button>
   </div>

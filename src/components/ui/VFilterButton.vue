@@ -7,10 +7,7 @@ defineProps<Props>();
 </script>
 
 <template>
-  <button
-    type="button"
-    class="v__filter-button"
-  >
+  <button type="button" class="v__filter-button">
     <v-icon icon="filter" />
   </button>
 </template>
