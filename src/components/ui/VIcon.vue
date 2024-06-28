@@ -9,9 +9,31 @@ import close from '@/assets/icons/close_icon.svg';
 import expand from '@/assets/icons/expand_icon.svg';
 import filter from '@/assets/icons/filter_icon.svg';
 import arrow from '@/assets/icons/arrow_icon.svg';
+// eslint-disable-next-line
+import close_big from '@/assets/icons/close_big.svg';
+// eslint-disable-next-line
+import plus_big from '@/assets/icons/plus_icon.svg';
+import plus from '@/assets/icons/plus_small.svg';
+import minus from '@/assets/icons/minus.svg';
+// eslint-disable-next-line
+import minus_big from '@/assets/icons/minus_big.svg';
 
 interface Props extends /* @vue-ignore */ SVGAttributes {
-  icon: 'dark' | 'light' | 'logo' | 'vector' | 'search' | 'close' | 'expand' | 'filter' | 'arrow';
+  icon:
+    | 'dark'
+    | 'light'
+    | 'logo'
+    | 'vector'
+    | 'search'
+    | 'close'
+    | 'expand'
+    | 'filter'
+    | 'arrow'
+    | 'close_big'
+    | 'plus_big'
+    | 'plus'
+    | 'minus'
+    | 'minus_big';
 }
 defineProps<Props>();
 
@@ -25,6 +47,14 @@ const icons = {
   expand,
   filter,
   arrow,
+  // eslint-disable-next-line
+  close_big,
+  // eslint-disable-next-line
+  plus_big,
+  plus,
+  minus,
+  // eslint-disable-next-line
+  minus_big,
 };
 </script>
 

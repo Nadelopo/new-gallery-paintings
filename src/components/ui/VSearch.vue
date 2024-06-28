@@ -1,27 +1,57 @@
 <script setup lang="ts">
-import { useAttrs, type InputHTMLAttributes } from 'vue';
+import { computed, useAttrs, type InputHTMLAttributes } from 'vue';
 import { VIcon } from '.';
+import { debounce as Debounce } from '@/utils/debounce';
 
-interface Props extends /* @vue-ignore */ InputHTMLAttributes {}
+interface Props extends /* @vue-ignore */ InputHTMLAttributes {
+  debounce?: number;
+  modelValue: string;
+}
 
 defineOptions({ inheritAttrs: false });
 
-defineProps<Props>();
-
-const model = defineModel<string>({ required: true });
+const props = defineProps<Props>();
 
 const emit = defineEmits<{
   search: [];
   clear: [];
+  'update:modelValue': [string];
 }>();
 
+const setModelValue = Debounce((value: string) => {
+  emit('update:modelValue', value);
+}, props.debounce ?? 0);
+
+const model = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    setModelValue(value);
+  },
+});
+
 const attrs = useAttrs();
+
+const clear = () => {
+  model.value = '';
+  emit('update:modelValue', '');
+  emit('clear');
+};
 </script>
 
 <template>
-  <div class="v__wrapper" :class="attrs.class">
+  <div
+    class="v__wrapper"
+    :class="attrs.class"
+  >
     <!-- eslint-disable-next-line -->
-    <input v-model="model" type="text" class="search" v-bind="{ ...attrs, class: undefined }" />
+    <input
+      v-model="model"
+      type="text"
+      class="search"
+      v-bind="{ ...attrs, class: undefined }"
+    />
     <v-icon
       icon="search"
       class="search__icon"
@@ -33,7 +63,7 @@ const attrs = useAttrs();
       icon="close"
       class="close__icon"
       fill="var(--text-primary-gray)"
-      @click="emit('clear'), (model = '')"
+      @click="clear"
     />
   </div>
 </template>
@@ -56,6 +86,9 @@ const attrs = useAttrs();
   overflow: hidden
   text-overflow: ellipsis
   white-space: nowrap
+  font-family: Inter
+  font-size: 14px
+  font-weight: 300
   &:focus-visible
     border: 1px solid var(--primary-gray-reverse)
 
