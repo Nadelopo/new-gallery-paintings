@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useRoute, useRouter } from 'vue-router';
+import { ContentLoader } from 'vue-content-loader';
 import { getData } from '@/api/getData';
 import { useDataStore, type Author, type Location } from '@/stores/useDataStore';
 import { VCard } from './ui';
@@ -109,6 +109,29 @@ watch([() => route.query, isRouterReady], async () => {
     />
   </div>
   <div
+    v-else-if="loading === 'loading'"
+    class="cards"
+  >
+    <content-loader
+      v-for="i in 6"
+      :key="i"
+      viewBox="0 0 392 260"
+      :speed="2"
+      :primary-color="isDark ? '#3c3c3c' : '#f3f3f3'"
+      :secondary-color="isDark ? '#232323' : '#ecebeb'"
+      class="skeleton"
+    >
+      <rect
+        x="0"
+        y="0"
+        rx="0"
+        ry="0"
+        width="100%"
+        height="100%"
+      />
+    </content-loader>
+  </div>
+  <div
     v-else-if="loading === 'empty'"
     class="empty"
   >
@@ -124,11 +147,14 @@ watch([() => route.query, isRouterReady], async () => {
 .cards
   display: grid
   grid-template-columns: repeat(3, 1fr)
+  justify-items: center
   gap: 32px
   @media (width < $md)
     grid-template-columns: 1fr 1fr
+    gap: 24px
   @media (width < $sm)
     grid-template-columns: 1fr
+    gap: 20px
 
 .empty
   color: var(--text-primary-gray)
@@ -142,4 +168,10 @@ watch([() => route.query, isRouterReady], async () => {
   div:last-child
     color: var(--secondary-gray)
     font-size: 14px
+
+.skeleton
+  @media (width < $md)
+    height: 220px
+  @media (width < $sm)
+    height: 185px
 </style>
