@@ -1,6 +1,8 @@
 import { ref } from 'vue';
 
-const isDark = ref(localStorage.theme === 'dark');
+const isOsDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+const isDark = ref(localStorage.theme === 'dark' || isOsDark);
 const setTheme = () => {
   const theme = isDark.value ? 'dark' : 'light';
   localStorage.setItem('theme', theme);
