@@ -1,41 +1,24 @@
 <script setup lang="ts">
-import { computed, useAttrs, type InputHTMLAttributes } from 'vue';
+import { useAttrs, type InputHTMLAttributes } from 'vue';
 import { VIcon } from '.';
-import { debounce as Debounce } from '@/utils/debounce';
 
-interface Props extends /* @vue-ignore */ InputHTMLAttributes {
-  debounce?: number;
-  modelValue: string;
-}
+interface Props extends /* @vue-ignore */ InputHTMLAttributes {}
+
+defineProps<Props>();
+
+const model = defineModel<string>({ required: true });
 
 defineOptions({ inheritAttrs: false });
-
-const props = defineProps<Props>();
 
 const emit = defineEmits<{
   search: [];
   clear: [];
-  'update:modelValue': [string];
 }>();
-
-const setModelValue = Debounce((value: string) => {
-  emit('update:modelValue', value);
-}, props.debounce ?? 0);
-
-const model = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    setModelValue(value);
-  },
-});
 
 const attrs = useAttrs();
 
 const clear = () => {
   model.value = '';
-  emit('update:modelValue', '');
   emit('clear');
 };
 </script>

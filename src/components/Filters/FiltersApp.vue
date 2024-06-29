@@ -16,36 +16,21 @@ import FilterBlock from './FilterBlock.vue';
 
 // prettier-ignore
 const {
-  search, createdFrom, createdTo, page,
+  search, createdFrom, createdTo, page, authorId, locationId, authors, locations,
 } = storeToRefs(useDataStore());
-
-// prettier-ignore
-const {
-  authorId, locationId, authors, locations,
-} = storeToRefs(useDataStore());
-
-const authorOptions = computed(() =>
-  authors.value.map((a) => ({
-    title: a.name,
-    value: a.id,
-  })),
-);
-
-const locationsOptions = computed(() =>
-  locations.value.map((a) => ({
-    title: a.location,
-    value: a.id,
-  })),
-);
-
-const isClearDisabled = computed(() => {
-  const isYearsEmpty = createdFrom.value === null && createdTo.value === null;
-  return (
-    search.value === '' && authorId.value === null && locationId.value === null && isYearsEmpty
-  );
-});
 
 const router = useRouter();
+onMounted(async () => {
+  await router.isReady();
+  const { query } = router.currentRoute.value;
+  search.value = (query.search as string) ?? '';
+  authorId.value = query.author ? Number(query.author) : null;
+  locationId.value = query.location ? Number(query.location) : null;
+  createdFrom.value = query.from ? Number(query.from) : null;
+  createdTo.value = query.to ? Number(query.to) : null;
+  page.value = query.page ? Number(query.page) : 1;
+});
+
 const setQueryParams = () => {
   page.value = 1;
   router.push({
@@ -70,23 +55,33 @@ const clear = () => {
   setQueryParams();
 };
 
-onMounted(async () => {
-  await router.isReady();
-  const { query } = router.currentRoute.value;
-  search.value = (query.search as string) ?? '';
-  authorId.value = query.author ? Number(query.author) : null;
-  locationId.value = query.location ? Number(query.location) : null;
-  createdFrom.value = query.from ? Number(query.from) : null;
-  createdTo.value = query.to ? Number(query.to) : null;
-  page.value = query.page ? Number(query.page) : 1;
-});
-
 const isFiltersOpen = ref(false);
 const filtersRef = ref<HTMLElement>();
 onClickOutside(filtersRef, () => {
   setTimeout(() => {
     isFiltersOpen.value = false;
   });
+});
+
+const authorOptions = computed(() =>
+  authors.value.map((a) => ({
+    title: a.name,
+    value: a.id,
+  })),
+);
+
+const locationsOptions = computed(() =>
+  locations.value.map((a) => ({
+    title: a.location,
+    value: a.id,
+  })),
+);
+
+const isClearDisabled = computed(() => {
+  const isYearsEmpty = createdFrom.value === null && createdTo.value === null;
+  return (
+    search.value === '' && authorId.value === null && locationId.value === null && isYearsEmpty
+  );
 });
 </script>
 
@@ -184,7 +179,6 @@ onClickOutside(filtersRef, () => {
 .wrapper
   display: flex
   justify-content: end
-  margin-top: 44px
   margin-bottom: 20px
   gap: 20px
 

@@ -149,7 +149,7 @@ const label = computed(() => {
     fill: var(--secondary-gray)
   &:has(.head.active)
     background: var(--bg-element)
-    border-radius: 4px 4px 0px 0px
+    border-radius: 10px 10px 0px 0px
     .expand
       transform: rotate(180deg)
 

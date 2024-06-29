@@ -33,6 +33,7 @@ const { isDark, toggleTheme } = useTheme();
 </template>
 
 <style scoped lang="sass">
+@use '@/assets/breakpoints' as *
 
 header
   background: var(--primary)
@@ -40,6 +41,12 @@ header
   display: flex
   justify-content: space-between
   align-items: center
+  margin-bottom: 44px
+  @media (width < $md)
+    height: 88px
+  @media (width < $sm)
+    height: 64px
+    margin-bottom: 27px
   .logo
     fill: var(--text-primary-gray)
   .theme-btn

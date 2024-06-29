@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useMediaQuery } from '@vueuse/core';
-import { VAccordion, VIcon } from '../ui';
+import { VIcon } from '../ui';
 
 defineProps<{
   title: string;
@@ -30,9 +30,14 @@ const icon = computed(() => {
       <h2>{{ title }}</h2>
       <v-icon :icon />
     </div>
-    <v-accordion :visibility="isOpen">
-      <slot />
-    </v-accordion>
+    <Transition name="v">
+      <div
+        v-if="isOpen"
+        class="slot"
+      >
+        <slot />
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -42,7 +47,6 @@ const icon = computed(() => {
 .head
   display: flex
   justify-content: space-between
-  margin-bottom: 24px
   cursor: pointer
   user-select: none
   svg
@@ -56,4 +60,19 @@ const icon = computed(() => {
     color: var(--primary-reverse)
     @media (width < $md)
       font-size: 12px
+
+.slot
+  margin-top: 24px
+
+.v-enter-active,
+.v-leave-active
+  transition: .2s ease
+  height: 36px
+  margin-top: 24px
+
+.v-enter-from,
+.v-leave-to
+  opacity: 0
+  height: 0px
+  margin-top: 0
 </style>

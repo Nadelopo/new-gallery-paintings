@@ -102,6 +102,8 @@ const imageUrl = import.meta.env.VITE_API + props.url;
     width: 0
     left: 0
     height: 42px
+    @media (width < $md)
+      display: none
   @media (width< $md)
     padding: 12px 0 12px 12px
   @media (width < $sm)
@@ -134,6 +136,9 @@ const imageUrl = import.meta.env.VITE_API + props.url;
   left: -280px
   opacity: 0
   transition: .4s
+  max-width: calc(100% - 20px)
+  @media (width< $md)
+    max-width: calc(100% - 12px)
 
 .artwork__info
   transition: .4s
