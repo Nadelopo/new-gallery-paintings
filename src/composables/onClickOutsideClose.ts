@@ -1,7 +1,4 @@
-// prettier-ignore
-import {
-  onUnmounted, watchEffect, ref, type Ref,
-} from 'vue';
+import { onUnmounted, watchEffect, ref, type Ref } from 'vue';
 
 export const onClickOutsideClose = (element: Ref<HTMLElement | undefined>): Ref<boolean> => {
   const value = ref(false);

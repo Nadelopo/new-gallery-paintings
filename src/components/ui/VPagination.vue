@@ -115,7 +115,7 @@ const setPage = (page: number) => {
 
 .v__pagination
   display: flex
-  gap: 6px
+  gap: 4px
   .prev, .next
     display: flex
     justify-content: center

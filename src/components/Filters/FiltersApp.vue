@@ -1,23 +1,14 @@
 <script setup lang="ts">
-// prettier-ignore
-import {
-  computed, onMounted, ref,
-} from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { onClickOutside } from '@vueuse/core';
 import { useDataStore } from '@/stores/useDataStore';
-// prettier-ignore
-import {
-  VSearch, VFilterButton, VIcon, VButton,
-  VInput, VSelect,
-} from '../ui';
+import { VSearch, VFilterButton, VIcon, VButton, VInput, VSelect } from '../ui';
 import FilterBlock from './FilterBlock.vue';
 
-// prettier-ignore
-const {
-  search, createdFrom, createdTo, page, authorId, locationId, authors, locations,
-} = storeToRefs(useDataStore());
+const { search, createdFrom, createdTo, page, authorId, locationId, authors, locations } =
+  storeToRefs(useDataStore());
 
 const router = useRouter();
 onMounted(async () => {
@@ -89,7 +80,6 @@ const isClearDisabled = computed(() => {
   <div class="wrapper">
     <v-search
       v-model="search"
-      class="test"
       placeholder="Painting title"
       @clear="setQueryParams"
       @keyup.enter="setQueryParams"
@@ -179,6 +169,7 @@ const isClearDisabled = computed(() => {
 .wrapper
   display: flex
   justify-content: end
+  align-items: end
   margin-bottom: 20px
   gap: 20px
 
@@ -200,12 +191,16 @@ const isClearDisabled = computed(() => {
       margin-top: 60px
       margin-left: auto
       margin-right: 100px
+      padding: 0
       background: none
       border: none
       outline: none
       @media (width < $md)
-        margin-left: auto
+        margin-right: 24px
+        margin-top: 24px
+      @media (width < $sm)
         margin-right: 20px
+        margin-top: 20px
       svg
         fill: var(--primary-gray-reverse)
   .filters__container
@@ -214,6 +209,9 @@ const isClearDisabled = computed(() => {
     margin-left: 40px
     @media (width < $md)
       margin-left: 32px
+      margin-top: 136px
+    @media (width < $sm)
+      margin-top: 84px
     @media (width < $sm)
       width: 240px
       margin-left: 20px

@@ -58,7 +58,7 @@ const icon = computed(() => {
     font-weight: 500
     text-transform: uppercase
     color: var(--primary-reverse)
-    @media (width < $md)
+    @media (width < $sm)
       font-size: 12px
 
 .slot
@@ -69,6 +69,8 @@ const icon = computed(() => {
   transition: .2s ease
   height: 36px
   margin-top: 24px
+  @media (width < $sm)
+    height: 33px
 
 .v-enter-from,
 .v-leave-to

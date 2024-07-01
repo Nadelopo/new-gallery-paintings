@@ -30,8 +30,13 @@ const setQuery = () => {
 </template>
 
 <style scoped lang="sass">
+@use '@/assets/breakpoints' as *
+
 .pagination
   margin-top: 40px
-  display: flex
   justify-content: center
+  margin-bottom: 100px
+  @media (width < $sm)
+    margin-bottom: 80px
+    margin-top: 32px
 </style>

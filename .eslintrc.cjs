@@ -9,8 +9,8 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     'eslint:recommended',
     '@vue/eslint-config-typescript',
-    '@vue/eslint-config-prettier/skip-formatting',
     '@vue/eslint-config-airbnb',
+    '@vue/eslint-config-prettier/skip-formatting',
   ],
   ignorePatterns: ['vite.config.ts'],
   parserOptions: {
@@ -20,9 +20,6 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'import/prefer-default-export': 'off',
-    'implicit-arrow-linebreak': 'off',
-    'function-paren-newline': 'off',
-    'linebreak-style': 'off',
   },
   settings: {
     ...createAliasSetting({

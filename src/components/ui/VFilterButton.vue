@@ -23,6 +23,9 @@ defineProps<Props>();
   border-radius: 4px
   padding: 6px
   border: none
+  display: flex
+  justify-content: center
+  align-items: center
   &:focus-visible, &:hover, &:active
     background: #1212120D
     svg

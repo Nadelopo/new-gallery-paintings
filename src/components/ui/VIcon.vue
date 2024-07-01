@@ -2,7 +2,9 @@
 import type { SVGAttributes } from 'vue';
 import dark from '@/assets/icons/dark_icon.svg';
 import light from '@/assets/icons/light_icon.svg';
-import logo from '@/assets/icons/logo.svg';
+import logo from '@/assets/icons/logo_small.svg';
+// eslint-disable-next-line
+import logo_big from '@/assets/icons/logo.svg';
 import vector from '@/assets/icons/vector.svg';
 import search from '@/assets/icons/search_icon.svg';
 import close from '@/assets/icons/close_icon.svg';
@@ -23,6 +25,7 @@ interface Props extends /* @vue-ignore */ SVGAttributes {
     | 'dark'
     | 'light'
     | 'logo'
+    | 'logo_big'
     | 'vector'
     | 'search'
     | 'close'
@@ -41,6 +44,8 @@ const icons = {
   dark,
   light,
   logo,
+  // eslint-disable-next-line
+  logo_big,
   vector,
   search,
   close,

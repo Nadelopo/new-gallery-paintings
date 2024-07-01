@@ -65,10 +65,7 @@ const setPaintings = async () => {
   paintings.value = data.map((p) => {
     const author = authors.value.find((a) => a.id === p.authorId)?.name ?? '';
     const location = locations.value.find((l) => l.id === p.locationId)?.location ?? '';
-    // prettier-ignore
-    const {
-      id, name, created, imageUrl,
-    } = p;
+    const { id, name, created, imageUrl } = p;
     return {
       id,
       name,
@@ -165,6 +162,7 @@ const { isDark } = useTheme();
 
 .empty
   color: var(--text-primary-gray)
+  margin-top: 60px
   > div
     font-size: 16px
     font-weight: 300

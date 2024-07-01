@@ -1,9 +1,5 @@
 <script setup lang="ts" generic="T">
-// prettier-ignore
-import {
-  ref, onUnmounted, watch, nextTick,
-  computed,
-} from 'vue';
+import { ref, onUnmounted, watch, nextTick, computed } from 'vue';
 import { onClickOutsideClose } from '@/composables/onClickOutsideClose';
 import { VIcon } from '.';
 
@@ -142,7 +138,6 @@ const label = computed(() => {
   font-weight: 300
   font-size: 14px
   @media (width < $sm)
-    font-size: 12px
     width: 240px
   .expand
     transition: transform 0.2s ease
@@ -166,9 +161,11 @@ const label = computed(() => {
   outline: none
   display: flex
   justify-content: space-between
+  align-items: center
   font-family: inherit
   @media (width < $sm)
     height: 33px
+    font-size: 12px
   &:focus-visible, &.active
     border: 1px solid var(--primary-gray-reverse)
   &.filled
@@ -210,6 +207,8 @@ const label = computed(() => {
     display: block
     outline: none
     font-family: inherit
+    @media (width < $sm)
+      font-size: 12px
     &:hover, &:focus-visible, &:focus
       background: #1212120D
   &.empty

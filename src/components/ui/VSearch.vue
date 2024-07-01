@@ -33,7 +33,7 @@ const clear = () => {
       v-model="model"
       type="text"
       class="search"
-      v-bind="{ ...attrs, class: undefined }"
+      v-bind="{ ...attrs, class: { filled: model } }"
     />
     <v-icon
       icon="search"
@@ -52,19 +52,25 @@ const clear = () => {
 </template>
 
 <style scoped lang="sass">
+@use '@/assets/breakpoints' as *
+
 .v__wrapper
   position: relative
   width: 340px
-  height: 36px
+  height: 100%
+  @media (width < $md)
+    width: 296px
+  @media (width < $sm)
+    width: 224px
+
 
 .search
   width: 100%
-  height: 100%
   border-radius: 4px
   padding: 8px 48px
   border: 1px solid var(--border)
   background: var(--bg-element)
-  color: var(--text-primary-gray)
+  color: var(--secondary-el)
   outline: none
   overflow: hidden
   text-overflow: ellipsis
@@ -72,8 +78,12 @@ const clear = () => {
   font-family: Inter
   font-size: 14px
   font-weight: 300
+  @media (width < $sm)
+    font-size: 12px
   &:focus-visible
     border: 1px solid var(--primary-gray-reverse)
+  &.filled
+    color: var(--text-primary-gray)
 
 .search__icon
   position: absolute

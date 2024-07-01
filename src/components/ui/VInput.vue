@@ -26,15 +26,22 @@ const onInput = () => {
 </template>
 
 <style scoped lang="sass">
+@use '@/assets/breakpoints' as *
+
 .v__input
   width: 66px
-  height: 36px
   border: 1px solid var(--border)
   border-radius: 4px
   padding: 8px 16px
   color: var(--secondary-gray)
   outline: none
   background: var(--bg-element)
+  text-align: center
+  font-family: Inter
+  font-weight: 300
+  font-size: 14px
+  @media (width < $sm)
+    font-size: 12px
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button
     -webkit-appearance: none
